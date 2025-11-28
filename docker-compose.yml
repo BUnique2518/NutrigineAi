@@ -1,0 +1,16 @@
+services:
+  backend:
+    container_name: nutrigenie-backend
+    build: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - nutrigenie-network
+volumes:
+  app-data:
+networks:
+  nutrigenie-network:
+    driver: bridge
