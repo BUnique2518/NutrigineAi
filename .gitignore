@@ -1,0 +1,90 @@
+#=================================================
+# Global Ignores
+# These apply to all files and folders
+#=================================================
+
+# OS-specific
+.DS_Store
+*.swp
+*.swo
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Secrets & Keys
+*.pem
+
+# Typescript build info
+*.tsbuildinfo
+
+#=================================================
+# Project-Wide Dependencies & Env
+# These use ** to match in any subfolder
+#=================================================
+
+# Dependencies
+**/node_modules
+
+# Environment variables
+# Ignores all .env files (e.g., .env, .env.local)
+# We add an exception for example files!
+**/.env*
+!**/.env.example
+
+# Testing
+**/coverage
+
+#=================================================
+# Frontend (Frontend-Nutrigenie-Ai/)
+# Rules specific to your Next.js project
+#=================================================
+
+# Next.js
+/frontend/.next/
+/frontend/out/
+
+# Vercel
+/frontend/.vercel
+
+# Next.js Typescript
+/frontend/next-env.d.ts
+
+# Production build
+/frontend/build
+
+# Yarn/PNP (if used *only* in frontend)
+/frontend/.pnp
+/frontend/.pnp.*
+/frontend/.yarn/*
+!/frontend/.yarn/patches
+!/frontend/.yarn/plugins
+!/frontend/.yarn/releases
+!/frontend/.yarn/versions
+
+#=================================================
+# Backend (backend/)
+# Common rules for a backend (e.g., Node.js)
+# (Add your backend folder name here)
+#=================================================
+# Ignore Prisma caches and generated engines
+/backend/prisma/migrations/ 
+/backend/prisma/dev.db
+
+# Ignore backend environment files (already globally ignored, but good for clarity)
+backend/.env
+backend/prisma/.env
+
+# Ignore debug logs in backend
+/backend/debug.log
+/backend/*.log
+
+# Ignore TypeScript build (if you later add TS)
+backend/dist
+backend/build
+
+# Ignore lock files inside backend if not needed
+/backend/package-lock.json
+/backend/yarn.lock

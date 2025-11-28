@@ -24,7 +24,7 @@ export default function Footer() {
             <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-12 mb-12">
               <div className="lg:col-span-1">
                 <div className="mb-4">
-                  <Image src="/images/nutrigenie.png" alt="NutriGenie Logo" width={48} height={48} className="w-12 h-12 mb-2" />
+                  <Image src="/images/nutrigenie.png" alt="NutriGenie Logo" width={64} height={64} className="w-16 h-16 mb-2" />
                   <h3 className="text-2xl font-bold">
                     <span className="bg-linear-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">
                       NutriGenie.ai

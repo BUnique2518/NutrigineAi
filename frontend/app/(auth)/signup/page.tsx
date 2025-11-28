@@ -7,20 +7,25 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { authService } from "@/services/auth";
 
 export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const [error, setError] = useState("");
   const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // We will replace this with a Server Action soon
-    console.log({ email, password, agreedToTerms });
-
-    router.push("/onboarding");
+    setError("");
+    try {
+      await authService.register({ email, password });
+      router.push("/login"); // Redirect to login after successful registration
+    } catch (err: any) {
+      setError(err.response?.data?.message || "Registration failed. Please try again.");
+    }
   };
 
   return (
@@ -34,6 +39,11 @@ export default function SignupPage() {
           </h2>
 
           <form onSubmit={handleSubmit} className="space-y-6">
+            {error && (
+              <div className="bg-red-50 text-red-600 p-3 rounded-lg text-sm">
+                {error}
+              </div>
+            )}
             {/* Email Input */}
             <div>
               <label className="block text-gray-700 font-medium mb-2">
@@ -85,7 +95,7 @@ export default function SignupPage() {
               <label htmlFor="terms" className="text-sm text-gray-600">
                 By signing up, I agree with the{" "}
                 <Link
-                  href="/terms" 
+                  href="/terms"
                   className="text-blue-600 hover:underline font-medium"
                 >
                   Terms of Use & Privacy Policy
@@ -110,8 +120,8 @@ export default function SignupPage() {
             </div>
 
             {/* Social Login */}
-               <div className="flex gap-4 justify-center">
-                       <button
+            <div className="flex gap-4 justify-center">
+              <button
                 type="button"
                 className="w-14 h-10 rounded-lg border border-gray-200 hover:border-gray-300 flex items-center justify-center transition"
               >
@@ -119,9 +129,9 @@ export default function SignupPage() {
                   src="/images/Google.gif"
                   unoptimized
                   alt="Google login"
-                  width={24} 
-                  height={24} 
-                 className="rounded-full" 
+                  width={24}
+                  height={24}
+                  className="rounded-full"
                 />
               </button>
 
@@ -138,7 +148,7 @@ export default function SignupPage() {
                 />
               </button>
 
-              
+
               <button
                 type="button"
                 className="w-14 h-10 rounded-lg border border-gray-200 hover:border-gray-300 flex items-center justify-center transition"
@@ -155,7 +165,7 @@ export default function SignupPage() {
             <p className="text-center text-gray-600 text-sm">
               Returning user?{" "}
               <Link
-                href="/login" 
+                href="/login"
                 className="text-blue-600 hover:underline font-medium"
               >
                 Log in here
@@ -163,7 +173,7 @@ export default function SignupPage() {
             </p>
           </form>
         </div>
-{/* Right Column - Benefits */}
+        {/* Right Column - Benefits */}
         <div>
           <h3 className="text-4xl md:text-5xl font-bold text-gray-900 mb-2">
             Come join us

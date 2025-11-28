@@ -8,6 +8,7 @@ import Step1 from "@/components/onboarding/step1";
 import Step2 from "@/components/onboarding/step2";
 import Step3 from "@/components/onboarding/step3";
 import { useRouter } from "next/navigation";
+import { onboardingService } from "@/services/onboarding";
 
 
 const initialFormData = {
@@ -30,7 +31,7 @@ const initialFormData = {
 export default function OnboardingPage() {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState(initialFormData);
-  const router = useRouter(); 
+  const router = useRouter();
 
   const nextStep = () => setStep((prev) => prev + 1);
   const prevStep = () => setStep((prev) => prev - 1);
@@ -52,14 +53,40 @@ export default function OnboardingPage() {
   const progress = (step / totalSteps) * 100;
 
   // This is the final submit for the *entire* form
-  const handleSubmit = (e: React.FormEvent) => {
+  // This is the final submit for the *entire* form
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("FINAL ONBOARDING DATA:", formData);
-    // Here we will call the Server Action to save the user's profile
-    // and then redirect to the dashboard
-    // router.push('/dashboard');
-    alert("Profile complete! (Check console for data)");
-    router.push("/"); // Redirect home for now
+
+    const payload = {
+      profile: {
+        age: Number(formData.age),
+        gender: formData.gender,
+        heightCm: Number(formData.height),
+        weightKg: Number(formData.weight),
+        country: formData.country,
+        state: formData.state,
+        phone: formData.phone,
+      },
+      fitnessGoals: {
+        primaryGoal: formData.goal,
+        fitnessLevel: Number(formData.fitnessLevel),
+        activityLevel: formData.activityLevel,
+        dietType: formData.dietType,
+      },
+      healthProfile: {
+        allergies: formData.allergies,
+        injuries: formData.injuries,
+        diseases: formData.diseases,
+      },
+    };
+
+    try {
+      await onboardingService.submitOnboardingForm(payload);
+      router.push("/dashboard"); // Redirect to dashboard on success
+    } catch (error) {
+      console.error("Onboarding failed:", error);
+      alert("Failed to save profile. Please try again.");
+    }
   };
 
   return (

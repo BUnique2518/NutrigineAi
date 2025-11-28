@@ -6,16 +6,27 @@ import { Eye, EyeOff, Utensils, BrainCircuit, Dumbbell } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { authService } from "@/services/auth";
 
 export default function LoginPage() {
+  const router = useRouter();
+  const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // We will replace this with a Server Action soon
-    console.log({ email, password });
+    setError("");
+    try {
+      const data = await authService.login({ email, password });
+      localStorage.setItem("accessToken", data.accessToken);
+      localStorage.setItem("refreshToken", data.refreshToken);
+      router.push("/dashboard"); // Redirect to dashboard
+    } catch (err: any) {
+      setError(err.response?.data?.message || "Login failed. Please try again.");
+    }
   };
 
   return (
@@ -29,6 +40,11 @@ export default function LoginPage() {
           </h2>
 
           <form onSubmit={handleSubmit} className="space-y-6">
+            {error && (
+              <div className="bg-red-50 text-red-600 p-3 rounded-lg text-sm">
+                {error}
+              </div>
+            )}
             {/* Email Input */}
             <div>
               <label className="block text-gray-700 font-medium mb-2">
