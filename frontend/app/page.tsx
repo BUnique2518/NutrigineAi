@@ -1,5 +1,9 @@
-import { Button } from "@/components/ui/button";
+import Footer from "@/components/landing/Footer";
 import Link from "next/link";
+import LandingWrapper from "@/components/landing/LandingWrapper";
+import { Button } from "@/components/ui/button";
+
+
 
 export default function Home() {
   return (
@@ -26,22 +30,13 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Hero Section */}
-      <main className="flex-1">
-        <section className="container mx-auto px-6 py-24 md:py-32 text-center">
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tighter mb-6">
-            Your Personal Food & Fitness Companion
-          </h1>
-          <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-10">
-            NutriGenie.ai creates personalized meal plans, smart grocery
-            lists, and custom workout routines to help you reach your
-            health goals.
-          </p>
-          <Button size="lg" asChild>
-            <Link href="/signup">Get Started For Free</Link>
-          </Button>
-        </section>
+            <main className="flex-1">
+
+        <LandingWrapper />
       </main>
+
+      {/* Footer */}
+      <Footer />  
     </div>
   );
 }
