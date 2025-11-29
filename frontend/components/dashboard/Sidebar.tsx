@@ -8,6 +8,7 @@ import {
   ShoppingCart,
   Settings,
 } from "lucide-react";
+import Image from "next/image";
 
 interface SidebarProps {
   open: boolean;
@@ -25,21 +26,18 @@ export default function Sidebar({ open }: SidebarProps) {
 
   return (
     <div
-      className={`${
-        open ? "w-64" : "w-20" 
-      } bg-slate-900 border-r border-slate-800 p-4 flex flex-col transition-all duration-300 overflow-hidden`}
+      className={`${open ? "w-64" : "w-20"
+        } bg-slate-900 border-r border-slate-800 p-4 flex flex-col transition-all duration-300 overflow-hidden`}
     >
       {/* Logo */}
       <div className="mb-8 flex items-center gap-2.5 px-2">
-        <div className="w-8 h-8 bg-green-400 rounded-full flex items-center justify-center shrink-0">
-          <span className="text-black font-bold text-sm">NG</span>
-        </div>
-        {open && (
-          <div className="flex flex-col leading-tight">
-            <span className="text-green-400 font-bold">NutriGenie</span>
-            <span className="text-green-400 text-xs">AI</span>
-          </div>
-        )}
+        <Image
+          src="/images/nutrigenie.png"
+          alt="NutriGenie Logo"
+          width={48}
+          height={48}
+          className="w-12 h-12 rounded-lg shrink-0"
+        />
       </div>
 
       {/* Navigation */}
@@ -47,11 +45,10 @@ export default function Sidebar({ open }: SidebarProps) {
         {navItems.map((item, i) => (
           <button
             key={i}
-            className={`w-full flex items-center gap-3 px-3 py-3 rounded text-sm transition-colors ${
-              item.active
-                ? "bg-slate-800 text-green-400"
-                : "text-slate-400 hover:text-white hover:bg-slate-800/50"
-            }`}
+            className={`w-full flex items-center gap-3 px-3 py-3 rounded text-sm transition-colors ${item.active
+              ? "bg-slate-800 text-green-400"
+              : "text-slate-400 hover:text-white hover:bg-slate-800/50"
+              }`}
           >
             <item.icon size={20} className="shrink-0" />
             {open && <span>{item.label}</span>}

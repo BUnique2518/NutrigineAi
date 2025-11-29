@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type React from "react";
 
 export default function AuthLayout({
@@ -11,13 +12,7 @@ export default function AuthLayout({
       {/* Header */}
       <header className="px-6 py-6 md:px-12">
         <Link href="/" className="flex items-center gap-2 w-fit">
-          <div className="w-8 h-8 bg-teal-400 rounded-lg flex items-center justify-center">
-            {/* We'll use the initials for your app - here we add the logo of our app later */}
-            <span className="text-white font-bold text-sm">NG</span>
-          </div>
-          <span className="text-xl font-semibold text-purple-700">
-            Nutri Genie AI
-          </span>
+          <Image src="/images/nutrigenie.png" alt="NutriGenie Logo" width={64} height={64} className="w-16 h-16 rounded-lg" />
         </Link>
       </header>
 
