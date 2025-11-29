@@ -1,47 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-
-generator client {
-  provider = "prisma-client-js"
-}
-
 model User {
-  id        Int      @id @default(autoincrement())
-  name      String?
-  email     String   @unique
-  password  String
-  refreshToken String?  
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  // Relations
-  profile       UserProfile?
-  fitnessGoals  UserFitnessGoals?
-  healthProfile UserHealthProfile?
-
+  id               Int                @id @default(autoincrement())
+  name             String?
+  email            String             @unique
+  password         String
+  refreshToken     String?
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
   dashboardMetrics DashboardMetrics?
+  fitnessGoals     UserFitnessGoals?
+  healthProfile    UserHealthProfile?
+  profile          UserProfile?
 }
-
 
 model UserProfile {
-  id        Int      @id @default(autoincrement())
-  userId    Int      @unique
-  age       Int?
-  gender    String?
-  heightCm  Int?
-  weightKg  Int?
-  country   String?
-  state     String?
-  phone     String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
+  id            Int      @id @default(autoincrement())
+  userId        Int      @unique
+  age           Int?
+  gender        String?
+  heightCm      Int?
+  weightKg      Int?
+  country       String?
+  state         String?
+  phone         String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
   initialWeight Int?
-
-  user User @relation(fields: [userId], references: [id])
+  user          User     @relation(fields: [userId], references: [id])
 }
 
 model UserFitnessGoals {
@@ -53,43 +46,42 @@ model UserFitnessGoals {
   dietType      String?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
-
-  user User @relation(fields: [userId], references: [id])
+  user          User     @relation(fields: [userId], references: [id])
 }
 
 model UserHealthProfile {
-  id         Int      @id @default(autoincrement())
-  userId     Int      @unique
-  allergies  String?
-  injuries   String?
-  diseases   String?
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-
-  user User @relation(fields: [userId], references: [id])
+  id        Int      @id @default(autoincrement())
+  userId    Int      @unique
+  allergies String?
+  injuries  String?
+  diseases  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id])
 }
 
-
 model DashboardMetrics {
-  id         Int      @id @default(autoincrement())
-  userId     Int      @unique
+  id                   Int      @id @default(autoincrement())
+  userId               Int      @unique
 
-  bmi        Float?
-  bodyFat    Float?
-  bmr        Int?
-  idealWeight Float?
-  idealBmr    Int?
-  msf        Float?
+  bmi                  Float?
+  bodyFat              Float?
+  bmr                  Int?
+  idealWeight          Float?
+  idealBmr             Int?
+  msf                  Float?
 
-  stressLevel  String?
-  stressRisk   String?
-  stressEmoji  String?
-  stressMsg    String?
+  stressLevel          String?
+  stressRisk           String?
+  stressEmoji          String?
+  stressMsg            String?
 
   weightLossPercentage Float?
 
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  nutriScore           Int?     
 
-  user User @relation(fields: [userId], references: [id])
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  user                 User     @relation(fields: [userId], references: [id])
 }

@@ -8,6 +8,7 @@ import {
   calculateMSF,
   interpretStress,
   calculateWeightLossPercentage,
+  nutrigenieScore
 } from "../utils/healthCalculations";
 
 export const getDashboardSummary = async (userId: number) => {
@@ -70,6 +71,17 @@ const weightLossPercentage = calculateWeightLossPercentage(
   idealWeight
 );
 
+const nutriScore = nutrigenieScore({
+  bmi,
+  bodyFat,
+  bmr,
+  idealBmr,
+  currentWeight: profile.weightKg,
+  idealWeight,
+  msf,
+  stress,
+  sexFormat: profile.gender as "Male" | "Female" | "unknown" | undefined,
+});
 
 
   //currently calculated metrics- fresh live values
@@ -82,6 +94,7 @@ const weightLossPercentage = calculateWeightLossPercentage(
     msf,
     stress,
     weightLossPercentage,
+    nutriScore
   };
 
   
@@ -101,6 +114,7 @@ const weightLossPercentage = calculateWeightLossPercentage(
       stressEmoji: stress.emoji,
       stressMsg: stress.msg,
       weightLossPercentage,
+      nutriScore
     },
     update: {
       bmi,
@@ -114,6 +128,7 @@ const weightLossPercentage = calculateWeightLossPercentage(
       stressEmoji: stress.emoji,
       stressMsg: stress.msg,
       weightLossPercentage,
+      nutriScore
     },
   });
 
