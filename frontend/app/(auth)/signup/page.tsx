@@ -22,7 +22,11 @@ export default function SignupPage() {
     e.preventDefault();
     setError("");
     try {
-      await authService.register({ email, password });
+      const response = await authService.register({ email, password });
+
+      // Store tokens in localStorage (same as login flow)
+      localStorage.setItem("accessToken", response.accessToken);
+      localStorage.setItem("refreshToken", response.refreshToken);
 
       setRedirecting(true);
       // Small delay to show loading state
